@@ -7,23 +7,26 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from cars.models import Car
-from cars.serializer import CarSerializer
+from cars.serializers import CarSerializer
 
 
 class CarAPIView(APIView):
     def get(self, request):
-        lst = Car.objects.all().values()
+        lst = Car.objects.all()
 
-        return Response({'posts': list(lst)})
+        return Response({'posts': CarSerializer(lst, many=True).data})
 
     def post(self, request):
+        serializer = CarSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+
         post_new = Car.objects.create(
             title=request.data['title'],
             content=request.data['content'],
             category_id=request.data['category_id']
         )
 
-        return Response({'post': model_to_dict(post_new)})
+        return Response({'post': CarSerializer(post_new).data})
 
 
 # class CarAPIView(generics.ListAPIView):
