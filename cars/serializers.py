@@ -28,11 +28,6 @@ class CarSerializer(serializers.Serializer):
 
         return instance
 
-    # def delete(self, instance, validate_data):
-    #     instance.delete()
-
-    #     return instance
-
 
 # class CarModel:
 #     def __init__(self, title, content):
