@@ -15,46 +15,56 @@ class CarAPIList(generics.ListCreateAPIView):
     serializer_class = CarSerializer
 
 
-class CarAPIView(APIView):
-    def get(self, request):
-        lst = Car.objects.all()
+class CarAPIUpdate(generics.UpdateAPIView):
+    queryset = Car.objects.all()
+    serializer_class = CarSerializer
 
-        return Response({'posts': CarSerializer(lst, many=True).data})
 
-    def post(self, request):
-        serializer = CarSerializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        serializer.save()
+class CarAPIDetailView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Car.objects.all()
+    serializer_class = CarSerializer
 
-        return Response({'post': serializer.data})
 
-    def put(self, request, *args, **kwargs):
-        pk = kwargs.get("pk", None)
+# class CarAPIView(APIView):
+#     def get(self, request):
+#         lst = Car.objects.all()
 
-        if not pk:
-            return Response({"error": "PUT method not allowed [Does not indicated the primary key]"})
+#         return Response({'posts': CarSerializer(lst, many=True).data})
 
-        try:
-            instance = Car.objects.get(pk=pk)
-        except:
-            return Response({"error": "Object does not exists"})
+#     def post(self, request):
+#         serializer = CarSerializer(data=request.data)
+#         serializer.is_valid(raise_exception=True)
+#         serializer.save()
 
-        serializer = CarSerializer(data=request.data, instance=instance)
-        serializer.is_valid(raise_exception=True)
-        serializer.save()
+#         return Response({'post': serializer.data})
 
-        return Response({"post": serializer.data})
+#     def put(self, request, *args, **kwargs):
+#         pk = kwargs.get("pk", None)
 
-    def delete(self, request, *args, **kwargs):
-        pk = kwargs.get("pk", None)
+#         if not pk:
+#             return Response({"error": "PUT method not allowed [Does not indicated the primary key]"})
 
-        if not pk:
-            return Response({"error": "DELETE method not allowed [Does not indicated the primary key]"})
+#         try:
+#             instance = Car.objects.get(pk=pk)
+#         except:
+#             return Response({"error": "Object does not exists"})
 
-        try:
-            instance = Car.objects.get(pk=pk)
-            instance.delete()
-        except:
-            return Response({"error": "Object does not exists"})
+#         serializer = CarSerializer(data=request.data, instance=instance)
+#         serializer.is_valid(raise_exception=True)
+#         serializer.save()
 
-        return Response({"post": f"The objects {pk} is deleted"})
+#         return Response({"post": serializer.data})
+
+#     def delete(self, request, *args, **kwargs):
+#         pk = kwargs.get("pk", None)
+
+#         if not pk:
+#             return Response({"error": "DELETE method not allowed [Does not indicated the primary key]"})
+
+#         try:
+#             instance = Car.objects.get(pk=pk)
+#             instance.delete()
+#         except:
+#             return Response({"error": "Object does not exists"})
+
+#         return Response({"post": f"The objects {pk} is deleted"})
