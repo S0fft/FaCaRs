@@ -27,7 +27,7 @@ class CarAPIView(APIView):
         pk = kwargs.get("pk", None)
 
         if not pk:
-            return Response({"error": "PUT method not allowed"})
+            return Response({"error": "PUT method not allowed [Does not indicated the primary key]"})
 
         try:
             instance = Car.objects.get(pk=pk)
@@ -40,19 +40,16 @@ class CarAPIView(APIView):
 
         return Response({"post": serializer.data})
 
-    # def delete(self, request, *args, **kwargs):
-    #     pk = kwargs.get("pk", None)
+    def delete(self, request, *args, **kwargs):
+        pk = kwargs.get("pk", None)
 
-    #     if not pk:
-    #         return Response({"error": "PUT method not allowed"})
+        if not pk:
+            return Response({"error": "DELETE method not allowed [Does not indicated the primary key]"})
 
-    #     try:
-    #         instance = Car.objects.get(pk=pk)
-    #     except:
-    #         return Response({"error": "Object does not exists"})
+        try:
+            instance = Car.objects.get(pk=pk)
+            instance.delete()
+        except:
+            return Response({"error": "Object does not exists"})
 
-    #     serializer = CarSerializer(data=request.data, instance=instance)
-    #     serializer.is_valid(raise_exception=True)
-    #     serializer.delete()
-
-    #     return Response({"post": serializer.data})
+        return Response({"post": f"The objects {pk} is deleted"})
