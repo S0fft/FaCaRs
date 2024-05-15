@@ -10,6 +10,11 @@ from cars.models import Car
 from cars.serializers import CarSerializer
 
 
+class CarAPIList(generics.ListCreateAPIView):
+    queryset = Car.objects.all()
+    serializer_class = CarSerializer
+
+
 class CarAPIView(APIView):
     def get(self, request):
         lst = Car.objects.all()
