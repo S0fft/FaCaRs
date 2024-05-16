@@ -12,6 +12,7 @@ class CarSerializer(serializers.ModelSerializer):
         fields = "__all__"
         # fields = ['title', 'content', 'category']
 
+# ---
 
 # class CarSerializer(serializers.Serializer):
 #     title = serializers.CharField(max_length=255)
@@ -33,6 +34,8 @@ class CarSerializer(serializers.ModelSerializer):
 #         instance.save()
 
 #         return instance
+
+# ---
 
 # class CarModel:
 #     def __init__(self, title, content):

@@ -4,8 +4,29 @@ from rest_framework import routers
 
 from cars.views import CarViewSet
 
-router = routers.SimpleRouter()
-router.register(r'cars', CarViewSet)
+# class CustomReadOnlyRouter(routers.SimpleRouter):
+#     routes = [
+#         routers.Route(
+#             url=r'^{prefix}$',
+#             mapping={'get': 'list'},
+#             name='{basename}-list',
+#             detail=False,
+#             initkwargs={'suffix': 'List'}
+#         ),
+#         routers.Route(
+#             url=r'^{prefix}/{lookup}$',
+#             mapping={'get': 'retrieve'},
+#             name='{basename}-detail',
+#             detail=True,
+#             initkwargs={'suffix': 'Detail'}
+#         )
+#     ]
+
+# router = CustomReadOnlyRouter()
+router = routers.DefaultRouter()
+
+router.register(r'cars', CarViewSet, basename='cars')
+print(router.urls)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
