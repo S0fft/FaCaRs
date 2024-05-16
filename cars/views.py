@@ -1,29 +1,36 @@
-from urllib import response
-
-from django.forms import model_to_dict
-from django.shortcuts import render
-from rest_framework import generics
-from rest_framework.response import Response
-from rest_framework.views import APIView
+# from urllib import response
+# from django.forms import model_to_dict
+# from django.shortcuts import render
+# from rest_framework.response import Response
+# from rest_framework.views import APIView
+from rest_framework import viewsets
 
 from cars.models import Car
 from cars.serializers import CarSerializer
 
 
-class CarAPIList(generics.ListCreateAPIView):
+class CarViewSet(viewsets.ModelViewSet):
     queryset = Car.objects.all()
     serializer_class = CarSerializer
 
 
-class CarAPIUpdate(generics.UpdateAPIView):
-    queryset = Car.objects.all()
-    serializer_class = CarSerializer
+# ---
+
+# class CarAPIList(generics.ListCreateAPIView):
+#     queryset = Car.objects.all()
+#     serializer_class = CarSerializer
 
 
-class CarAPIDetailView(generics.RetrieveUpdateDestroyAPIView):
-    queryset = Car.objects.all()
-    serializer_class = CarSerializer
+# class CarAPIUpdate(generics.UpdateAPIView):
+#     queryset = Car.objects.all()
+#     serializer_class = CarSerializer
 
+
+# class CarAPIDetailView(generics.RetrieveUpdateDestroyAPIView):
+#     queryset = Car.objects.all()
+#     serializer_class = CarSerializer
+
+# ---
 
 # class CarAPIView(APIView):
 #     def get(self, request):
