@@ -2,48 +2,49 @@
 # from django.forms import model_to_dict
 # from django.shortcuts import render
 # from rest_framework.views import APIView
-from rest_framework import viewsets
+from rest_framework import generics, viewsets
 from rest_framework.decorators import action
 from rest_framework.response import Response
 
 from cars.models import Car, Category
 from cars.serializers import CarSerializer
 
+# class CarViewSet(viewsets.ModelViewSet):
+#     # queryset = Car.objects.all()
+#     serializer_class = CarSerializer
 
-class CarViewSet(viewsets.ModelViewSet):
-    # queryset = Car.objects.all()
-    serializer_class = CarSerializer
+#     def get_queryset(self):
+#         pk = self.kwargs.get('pk')
 
-    def get_queryset(self):
-        pk = self.kwargs.get('pk')
+#         if not pk:
+#             return Car.objects.all()
 
-        if not pk:
-            return Car.objects.all()
+#         return Car.objects.filter(pk=pk)
 
-        return Car.objects.filter(pk=pk)
+#     @action(methods=['get'], detail=True)
+#     def category(self, request, pk=None):
+#         # category = Category.objects.all()
+#         category = Category.objects.get(pk=pk)
 
-    @action(methods=['get'], detail=True)
-    def category(self, request, pk=None):
-        # category = Category.objects.all()
-        category = Category.objects.get(pk=pk)
-
-        # return Response({'category': [c.name for c in category]})
-        return Response({'category': category.name})
+#         # return Response({'category': [c.name for c in category]})
+#         return Response({'category': category.name})
 
 
 # ---
 
-# class CarAPIList(generics.ListCreateAPIView):
-#     queryset = Car.objects.all()
-#     serializer_class = CarSerializer
+class CarAPIList(generics.ListCreateAPIView):
+    queryset = Car.objects.all()
+    serializer_class = CarSerializer
 
-# class CarAPIUpdate(generics.UpdateAPIView):
-#     queryset = Car.objects.all()
-#     serializer_class = CarSerializer
 
-# class CarAPIDetailView(generics.RetrieveUpdateDestroyAPIView):
-#     queryset = Car.objects.all()
-#     serializer_class = CarSerializer
+class CarAPIUpdate(generics.UpdateAPIView):
+    queryset = Car.objects.all()
+    serializer_class = CarSerializer
+
+
+class CarAPIDestroyView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Car.objects.all()
+    serializer_class = CarSerializer
 
 # ---
 
