@@ -8,7 +8,7 @@ from rest_framework.permissions import IsAdminUser, IsAuthenticatedOrReadOnly
 from rest_framework.response import Response
 
 from cars.models import Car, Category
-from cars.permissions import IsAdminOrReadOnly
+from cars.permissions import IsAdminOrReadOnly, IsOwnerOrReadOnly
 from cars.serializers import CarSerializer
 
 # class CarViewSet(viewsets.ModelViewSet):
@@ -43,6 +43,7 @@ class CarAPIList(generics.ListCreateAPIView):
 class CarAPIUpdate(generics.UpdateAPIView):
     queryset = Car.objects.all()
     serializer_class = CarSerializer
+    permission_classes = (IsOwnerOrReadOnly, )
 
 
 class CarAPIDestroy(generics.RetrieveDestroyAPIView):
