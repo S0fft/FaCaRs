@@ -4,9 +4,11 @@
 # from rest_framework.views import APIView
 from rest_framework import generics, viewsets
 from rest_framework.decorators import action
+from rest_framework.permissions import IsAdminUser, IsAuthenticatedOrReadOnly
 from rest_framework.response import Response
 
 from cars.models import Car, Category
+from cars.permissions import IsAdminOrReadOnly
 from cars.serializers import CarSerializer
 
 # class CarViewSet(viewsets.ModelViewSet):
@@ -35,6 +37,7 @@ from cars.serializers import CarSerializer
 class CarAPIList(generics.ListCreateAPIView):
     queryset = Car.objects.all()
     serializer_class = CarSerializer
+    permission_classes = (IsAuthenticatedOrReadOnly, )
 
 
 class CarAPIUpdate(generics.UpdateAPIView):
@@ -42,9 +45,11 @@ class CarAPIUpdate(generics.UpdateAPIView):
     serializer_class = CarSerializer
 
 
-class CarAPIDestroyView(generics.RetrieveUpdateDestroyAPIView):
+class CarAPIDestroy(generics.RetrieveDestroyAPIView):
     queryset = Car.objects.all()
     serializer_class = CarSerializer
+    permission_classes = (IsAdminOrReadOnly, )
+
 
 # ---
 
