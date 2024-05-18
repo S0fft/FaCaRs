@@ -3,8 +3,9 @@
 # from django.shortcuts import render
 # from rest_framework.views import APIView
 from rest_framework import generics, viewsets
+from rest_framework.authentication import TokenAuthentication
 from rest_framework.decorators import action
-from rest_framework.permissions import IsAdminUser, IsAuthenticatedOrReadOnly
+from rest_framework.permissions import IsAdminUser, IsAuthenticated, IsAuthenticatedOrReadOnly
 from rest_framework.response import Response
 
 from cars.models import Car, Category
@@ -37,19 +38,20 @@ from cars.serializers import CarSerializer
 class CarAPIList(generics.ListCreateAPIView):
     queryset = Car.objects.all()
     serializer_class = CarSerializer
-    permission_classes = (IsAuthenticatedOrReadOnly, )
+    permission_classes = (IsAuthenticatedOrReadOnly,)
 
 
 class CarAPIUpdate(generics.RetrieveUpdateAPIView):
     queryset = Car.objects.all()
     serializer_class = CarSerializer
-    permission_classes = (IsOwnerOrReadOnly, )
+    permission_classes = (IsAuthenticated,)
+    # authentication_classes = (TokenAuthentication, )
 
 
 class CarAPIDestroy(generics.RetrieveDestroyAPIView):
     queryset = Car.objects.all()
     serializer_class = CarSerializer
-    permission_classes = (IsAdminOrReadOnly, )
+    permission_classes = (IsAdminOrReadOnly,)
 
 
 # ---
