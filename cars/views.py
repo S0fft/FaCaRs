@@ -40,7 +40,7 @@ class CarAPIList(generics.ListCreateAPIView):
     permission_classes = (IsAuthenticatedOrReadOnly, )
 
 
-class CarAPIUpdate(generics.UpdateAPIView):
+class CarAPIUpdate(generics.RetrieveUpdateAPIView):
     queryset = Car.objects.all()
     serializer_class = CarSerializer
     permission_classes = (IsOwnerOrReadOnly, )
