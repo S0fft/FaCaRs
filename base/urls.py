@@ -1,6 +1,7 @@
 from django.contrib import admin
 from django.urls import include, path, re_path
 from rest_framework import routers
+from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView, TokenVerifyView
 
 from cars.views import CarAPIDestroy, CarAPIList, CarAPIUpdate
 
@@ -38,6 +39,9 @@ urlpatterns = [
     path('api/v1/cars-delete/<int:pk>/', CarAPIDestroy.as_view()),
     path('api/v1/auth/', include('djoser.urls')),
     re_path('^auth/', include('djoser.urls.authtoken')),
+    path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+    path('api/token/verify/', TokenVerifyView.as_view(), name='token_verify'),
     # path('api/v1/', include(router.urls)),
     # path('api/v1/carslist/', CarAPIView.as_view()),
     # path('api/v1/carslist/<int:pk>/', CarAPIView.as_view())
