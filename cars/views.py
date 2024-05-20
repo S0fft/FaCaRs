@@ -5,6 +5,7 @@
 from rest_framework import generics, viewsets
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.decorators import action
+from rest_framework.pagination import PageNumberPagination
 from rest_framework.permissions import IsAdminUser, IsAuthenticated, IsAuthenticatedOrReadOnly
 from rest_framework.response import Response
 
@@ -35,10 +36,18 @@ from cars.serializers import CarSerializer
 
 # ---
 
+
+# class CarAPIListPagination(PageNumberPagination):
+#     page_size = 5
+#     page_query_param = 'page_size'
+#     max_page_size = 10000
+
+
 class CarAPIList(generics.ListCreateAPIView):
     queryset = Car.objects.all()
     serializer_class = CarSerializer
     permission_classes = (IsAuthenticatedOrReadOnly,)
+    # pagination_class = CarAPIListPagination
 
 
 class CarAPIUpdate(generics.RetrieveUpdateAPIView):
